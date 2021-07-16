@@ -14,7 +14,29 @@ services:
             - "8080:8080"
         command: npm run start:dev
         environment:
-            NODE_ENV: development
+            NODE_ENV: ${APP_ENV}
+            PORT: ${APP_PORT}
+            DB_NAME: ${DB_NAME}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        depends_on: 
+            - mysql
+        networks: 
+            - appjs
+    mysql:
+        image: mysql:5.7
+        restart: unless-stopped
+        tty: true
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
         networks: 
             - appjs
     
