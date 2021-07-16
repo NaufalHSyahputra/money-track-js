@@ -9,7 +9,7 @@ services:
             context: .
             target: dev
         volumes: 
-            - "./app:/src"
+            - ./app:/src
         ports: 
             - "8080:8080"
         command: npm run start:dev
